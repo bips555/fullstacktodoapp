@@ -12,6 +12,12 @@ export default function Login() {
     password: "",
   });
 
+
+  const [errors, seterrors] = useState(null);
+  const handleChange = (e) => {
+    setform({ ...form, [e.target.name]: e.target.value });
+  };
+
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
@@ -19,10 +25,6 @@ export default function Login() {
     }
   });
 
-  const [errors, seterrors] = useState(null);
-  const handleChange = (e) => {
-    setform({ ...form, [e.target.name]: e.target.value });
-  };
   const handlesubmit = async (e) => {
     e.preventDefault();
     const result = await login(form);
@@ -32,7 +34,6 @@ export default function Login() {
     if (result.status === 200) {
       if (result.data.status === 200) {
         localStorage.setItem("user", JSON.stringify(result.data.data));
-        toast('Logged in Successfully')
         navigation("/");
         return;
       }
