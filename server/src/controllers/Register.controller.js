@@ -3,8 +3,8 @@ import { jsonGenerate } from "../utilities/helpers.js";
 import bcrypt, { hashSync } from "bcrypt"
 import UserModel from "../models/User.model.js";
 import { StatusCode } from "../utilities/constants.js";
-
-
+import Jwt from "jsonwebtoken"
+import { jwtsecretkey } from "../utilities/constants.js";
 
  const Register = async (req, res) => {
   const errors = validationResult(req);
@@ -25,15 +25,17 @@ import { StatusCode } from "../utilities/constants.js";
     }
 
     try{
-        const result = await UserModel.create({
+        const user = await UserModel.create({
 name:name,
 email:email,
 password:password,
 username:username
         })
     
-
-        res.json(jsonGenerate(StatusCode.SUCCESS ,"Registration successful",result));
+const token = Jwt.sign({userId:user._id},jwtsecretkey)
+        res.json(jsonGenerate(StatusCode.SUCCESS ,"Registration successful",{
+          userId:user._id,token:token
+        }));
     
     }
     catch(error)

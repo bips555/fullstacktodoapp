@@ -23,7 +23,7 @@ export default function Login() {
     if (user) {
       return navigation("/");
     }
-  });
+  },[]);
 
   const handlesubmit = async (e) => {
     e.preventDefault();

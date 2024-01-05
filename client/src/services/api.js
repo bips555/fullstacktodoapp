@@ -65,8 +65,11 @@ export const update_todo=(data)=>{
   };
 export const gettoken = () => {
   let user = localStorage.getItem("user");
+  console.log(user)
   if (user) {
     const userObj = JSON.parse(user);
+    console.log(userObj.token)
     return userObj.token;
+    
   }
 };

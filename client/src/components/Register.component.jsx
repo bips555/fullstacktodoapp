@@ -1,4 +1,4 @@
-import { gettoken, register } from "../services/api.js";
+import { register } from "../services/api.js";
 import React from "react";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,7 +9,7 @@ export default function Register() {
   const navigation = useNavigate();
   useEffect(() => {
     const user = localStorage.getItem("user");
-    if (user && gettoken()) {
+    if (user) {
       navigation("/");
     }
   });
@@ -27,7 +27,7 @@ export default function Register() {
     setform({ ...form, [e.target.name]: e.target.value });
   };
   const handlesubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const result = await register(form);
     console.log(result);
     if (result.status === 200) {
@@ -38,7 +38,7 @@ export default function Register() {
       }
       if (result.data.status === 200) {
         localStorage.setItem("user", JSON.stringify(result.data.data));
-        navigation("/login");
+        navigation("/");
         return;
       }
       if (result.data.status === 202) {

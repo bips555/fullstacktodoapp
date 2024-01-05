@@ -19,7 +19,7 @@ export default function Home() {
       navigation("/login");
     }
     fetchtodolist();
-  }, [navigation, refresh]);
+  }, [refresh]);
   useEffect(() => {
     if (search === "") {
       setfilter(list);
